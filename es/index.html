@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mac Problema de suspensión: pantalla negra después de despertar — Solución simple</title>
+	<meta name="description" content="Soluciona la pantalla negra después de la suspensión en Mac. Comando simple de terminal para macOS Sequoia y versiones posteriores. Guía paso a paso." />
+    <meta name="keywords" content="Mac pantalla negra después de suspensión, MacBook no despierta, macOS Sequoia problema suspensión, solucionar problema suspensión Mac" />
+	<link rel="canonical" href="https://black-screen-solution.vercel.app/es/" />
+	<link rel="alternate" href="https://black-screen-solution.vercel.app/" hreflang="en" />
+    <link rel="alternate" href="https://black-screen-solution.vercel.app/de/" hreflang="de" />
+    <link rel="alternate" href="https://black-screen-solution.vercel.app/fr/" hreflang="fr" />
+    <link rel="alternate" href="https://black-screen-solution.vercel.app/es/" hreflang="es" />
+    <link rel="alternate" href="https://black-screen-solution.vercel.app/pt/" hreflang="pt" />
+    <link rel="alternate" href="https://black-screen-solution.vercel.app/it/" hreflang="it" />
+    <link rel="alternate" href="https://black-screen-solution.vercel.app/" hreflang="x-default" />
+    <link rel="icon" type="image/svg+xml"
+          href='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%200%20512%20512%22%3E%3Cpath d=%22M185.255 512c-76.201-.439-139.233-155.991-139.233-235.21 0-129.404 97.075-157.734 134.487-157.734 16.86 0 34.863 6.621 50.742 12.48 11.104 4.087 22.588 8.306 28.975 8.306 3.823 0 12.832-3.589 20.786-6.738 16.963-6.753 38.071-15.146 62.651-15.146h.146c18.354 0 74.004 4.028 107.461 54.272l7.837 11.777-11.279 8.511c-16.113 12.158-45.513 34.336-45.513 78.267 0 52.031 33.296 72.041 49.292 81.665 7.061 4.248 14.37 8.628 14.37 18.208 0 6.255-49.922 140.566-122.417 140.566-17.739 0-30.278-5.332-41.338-10.034-11.191-4.761-20.845-8.862-36.797-8.862-8.086 0-18.311 3.823-29.136 7.881C221.496 505.73 204.752 512 185.753 512h-.498zM351.343 0c1.888 68.076-46.797 115.304-95.425 112.342C247.905 58.015 304.54 0 351.343 0z%22 fill=%22%238e8e8e%22/%3E%3C/svg%3E'>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-XXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-XXXXXXXXX');
+</script>
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        html {
+            background: #f5f5f7;
+        }
+
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Icons", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            min-height: 100vh;
+            background: #fff;
+            align-items: center;
+            color: #1d1d1f;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ===== Header (Global Nav) ===== */
+
+        .site-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            flex-wrap: nowrap;
+            background: #1d1d1f;
+            width: 100%;
+            height: 44px;
+        }
+
+        .site-header-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 10px;
+            height: 44px;
+        }
+
+        .site-header-icon svg path {
+            fill: #d1d1d6;
+            transition: fill 0.3s ease;
+        }
+
+        .site-header-icon:hover svg path {
+            fill: #fff;
+        }
+
+        .site-header-link {
+            text-decoration: none;
+            font-size: 12px;
+            color: #d1d1d6;
+            cursor: pointer;
+            font-weight: 400;
+            letter-spacing: 0.008em;
+            padding: 0 10px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            transition: color 0.3s ease;
+        }
+
+        .site-header-link:visited {
+            color: #d1d1d6;
+        }
+
+        .site-header-link:hover {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        /* ===== Page Content ===== */
+
+        .page-content {
+            width: 100%;
+            max-width: 740px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            flex-direction: column;
+            padding: 0 22px;
+            color: #1d1d1f;
+        }
+
+        .page-title {
+            margin-top: 56px;
+            margin-bottom: 16px;
+            width: 100%;
+            font-size: 40px;
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.005em;
+        }
+
+        .page-description {
+            font-size: 17px;
+            font-weight: 400;
+            line-height: 1.47;
+            color: #1d1d1f;
+            width: 100%;
+            margin-top: 0;
+            margin-bottom: 8px;
+        }
+
+        /* ===== Section Headings (h2-style) ===== */
+
+        .section-heading {
+            width: 100%;
+            font-size: 24px;
+            font-weight: 700;
+            line-height: 1.17;
+            margin-top: 40px;
+            margin-bottom: 12px;
+        }
+
+        .section-label {
+            width: 100%;
+            font-size: 24px;
+            font-weight: 700;
+            line-height: 1.17;
+            margin-top: 40px;
+            margin-bottom: 12px;
+        }
+
+        /* ===== List Items ===== */
+
+        .section-item {
+            width: 100%;
+            margin-top: 6px;
+            padding-left: 28px;
+            font-size: 17px;
+            font-weight: 400;
+            line-height: 1.47;
+        }
+
+        .section-item b {
+            font-weight: 600;
+        }
+
+        .section-item li {
+            padding-left: 4px;
+        }
+
+        /* ===== Article Date ===== */
+
+        .article-date {
+            font-weight: 400;
+            width: 100%;
+            margin-top: 48px;
+            font-size: 14px;
+            color: #6e6e73;
+        }
+
+        /* ===== Dividers ===== */
+
+        .section-divider {
+            width: 100%;
+            max-width: 740px;
+            height: 1px;
+            background-color: #d2d2d7;
+            margin-top: 32px;
+        }
+
+        .footer-divider {
+            width: 980px;
+            max-width: 100%;
+            height: 1px;
+            background-color: #d2d2d7;
+            margin-top: 10px;
+        }
+
+        /* ===== Feedback ===== */
+
+        .feedback {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            max-width: 740px;
+            padding: 0 22px;
+            margin-top: 16px;
+            margin-bottom: 20px;
+        }
+
+        .feedback-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+
+        .feedback-button {
+            padding: 2px 14px;
+            border: 1px solid #0071e3;
+            background: #fff;
+            color: #0071e3;
+            border-radius: 18px;
+            font-size: 12px;
+            cursor: pointer;
+            font-weight: 400;
+            transition: background 0.2s ease, color 0.2s ease;
+            font-family: inherit;
+        }
+
+        .feedback-button:hover {
+            background: #0071e3;
+            color: #fff;
+        }
+
+        .feedback-button:active {
+            background: #0062cc;
+            color: #fff;
+        }
+
+        /* ===== Footer ===== */
+
+        .site-footer {
+            background-color: #f5f5f7;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            padding-top: 17px;
+            padding-bottom: 8px;
+            margin-top: auto;
+        }
+
+        .footer-breadcrumb {
+            width: 980px;
+            max-width: calc(100% - 44px);
+            color: #6e6e73;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .footer-logo {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-breadcrumb svg {
+            width: 8px;
+            height: 8px;
+        }
+
+        .footer-breadcrumb .footer-logo svg {
+            width: 12px;
+            height: 12px;
+        }
+
+        .footer-bottom {
+            width: 980px;
+            max-width: calc(100% - 44px);
+            padding: 10px 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 4px;
+            font-family: inherit;
+            font-size: 12px;
+            color: #6e6e73;
+        }
+
+        .footer-links {
+            display: flex;
+            align-items: center;
+            gap: 0;
+        }
+
+        .footer-links a {
+            color: #424245;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-separator {
+            color: #d2d2d7;
+            margin: 0 7px;
+            font-size: 11px;
+        }
+
+        .footer-copy {
+            margin-right: 12px;
+            color: #6e6e73;
+        }
+
+        .footer-locale {
+            color: #424245;
+        }
+
+        /* ===== Terminal Block ===== */
+
+        .terminal {
+            margin-top: 20px;
+            align-self: flex-start;
+            width: 100%;
+            max-width: 100%;
+            background-color: #fafafa;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .terminal-header {
+            background-color: #f3f4f6;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+            gap: 6px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .terminal-dot.red {
+            background-color: #ef4444;
+            border: 1px solid rgba(220, 38, 38, 0.5);
+        }
+
+        .terminal-dot.yellow {
+            background-color: #fbbf24;
+            border: 1px solid rgba(234, 179, 8, 0.5);
+        }
+
+        .terminal-dot.green {
+            background-color: #22c55e;
+            border: 1px solid rgba(21, 128, 61, 0.5);
+        }
+
+        .terminal-title {
+            font-size: 13px;
+            color: #6e6e73;
+            font-weight: 500;
+            font-family: inherit;
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .terminal-title-spacer {
+            width: 48px;
+        }
+
+        .terminal-body {
+            padding: 14px 16px;
+        }
+
+        .terminal-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .terminal-command-wrapper {
+            flex: 1;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 4px 0;
+        }
+
+        .terminal-command-wrapper::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .terminal-command-wrapper::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .terminal-command-wrapper::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 10px;
+        }
+
+        .terminal-command-wrapper::-webkit-scrollbar-thumb:hover {
+            background: #aaa;
+        }
+
+        .terminal-font {
+            font-family: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
+        }
+
+        .terminal-command {
+            font-size: 13px;
+            color: #1d1d1f !important;
+        }
+
+        .copy-button {
+            flex-shrink: 0;
+            font-size: 13px;
+            padding: 7px 18px;
+            background-color: #fff;
+            color: #1d1d1f;
+            border: 1px solid #d2d2d7;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            font-family: inherit;
+            transition:
+                background-color 0.15s ease,
+                border-color 0.15s ease;
+        }
+
+        .copy-button:hover {
+            background-color: #f5f5f7;
+            border-color: #b0b0b5;
+        }
+
+        .copy-button:active {
+            background-color: #e8e8ed;
+        }
+
+        .copy-button:disabled {
+            cursor: default;
+            opacity: 0.7;
+        }
+
+        /* ===== Dark Mode ===== */
+
+        @media (prefers-color-scheme: dark) {
+            html { background: #000; }
+            body { background: #1d1d1f; color: #f5f5f7; }
+            .site-header { background: #f5f5f7; }
+            .site-header-link { color: #424245; }
+            .site-header-link:visited { color: #424245; }
+            .site-header-link:hover { color: #1d1d1f; }
+            .site-header-icon svg path { fill: #424245; }
+            .site-header-icon:hover svg path { fill: #1d1d1f; }
+            .page-content { color: #f5f5f7; }
+            .page-description { color: #f5f5f7; }
+            .section-divider { background-color: #424245; }
+            .footer-divider { background-color: #424245; }
+            .feedback-label { color: #f5f5f7; }
+            .feedback-button { background: #1d1d1f; color: #2997ff; border-color: #2997ff; }
+            .feedback-button:hover { background: #2997ff; color: #fff; }
+            .feedback-button:active { background: #0077ed; color: #fff; }
+            .site-footer { background-color: #000; }
+            .footer-breadcrumb { color: #86868b; }
+            .footer-bottom { color: #86868b; }
+            .footer-links a { color: #d1d1d6; }
+            .footer-copy { color: #86868b; }
+            .footer-separator { color: #424245; }
+            .footer-locale { color: #d1d1d6; }
+            .terminal { background-color: #2d2d2d; border-color: #424245; }
+            .terminal-header { background-color: #333; border-color: #424245; }
+            .terminal-title { color: #86868b; }
+            .terminal-command { color: #f5f5f7 !important; }
+            .copy-button { background-color: #333; color: #f5f5f7; border-color: #555; }
+            .copy-button:hover { background-color: #444; border-color: #666; }
+            .copy-button:active { background-color: #555; }
+            .article-date { color: #86868b; }
+        }
+
+        /* ===== Responsive ===== */
+
+        @media (max-width: 1068px) {
+            .page-content {
+                max-width: 692px;
+            }
+            .page-title {
+                font-size: 36px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .site-header {
+                padding: 0 8px;
+                overflow-x: auto;
+                justify-content: flex-start;
+                -webkit-overflow-scrolling: touch;
+            }
+            .site-header::-webkit-scrollbar {
+                display: none;
+            }
+            .page-content {
+                max-width: 100%;
+                padding: 0 20px;
+            }
+            .page-title {
+                font-size: 32px;
+                margin-top: 36px;
+            }
+            .section-heading,
+            .section-label {
+                font-size: 21px;
+                margin-top: 32px;
+            }
+            .section-item {
+                padding-left: 20px;
+            }
+            .feedback {
+                max-width: 100%;
+                padding: 0 20px;
+            }
+            .section-divider {
+                max-width: calc(100% - 40px);
+            }
+            .footer-breadcrumb,
+            .footer-bottom {
+                max-width: calc(100% - 40px);
+            }
+            .footer-divider {
+                max-width: calc(100% - 40px);
+            }
+            .footer-bottom {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            .footer-links {
+                flex-wrap: wrap;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .site-header {
+                height: 48px;
+            }
+            .site-header-link {
+                font-size: 11px;
+                white-space: nowrap;
+                padding: 0 8px;
+            }
+            .site-header-icon {
+                padding: 0 8px;
+            }
+            .page-title {
+                font-size: 28px;
+                margin-top: 28px;
+            }
+            .page-description {
+                font-size: 15px;
+            }
+            .section-heading,
+            .section-label {
+                font-size: 19px;
+            }
+            .section-item {
+                font-size: 15px;
+            }
+            .terminal-command {
+                font-size: 11px;
+            }
+            .copy-button {
+                font-size: 12px;
+                padding: 6px 14px;
+            }
+        }
+        /* Language Dropdown */
+        .language-dropdown {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            height: 44px;
+            margin-left: 8px;
+        }
+        .lang-current {
+            background: none;
+            border: none;
+            color: #d1d1d6;
+            font-size: 12px;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            padding: 0 10px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: color 0.3s ease;
+        }
+        .lang-current:hover {
+            color: #fff;
+        }
+        .lang-menu {
+            position: absolute;
+            top: 44px;
+            right: 0;
+            background: #1d1d1f;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            min-width: 110px;
+            display: none;
+            z-index: 1000;
+            overflow: hidden;
+        }
+        .lang-menu.show {
+            display: block;
+        }
+        .lang-option {
+            display: block;
+            padding: 8px 16px;
+            color: #d1d1d6;
+            text-decoration: none;
+            font-size: 12px;
+            transition: background 0.2s ease;
+            white-space: nowrap;
+        }
+        .lang-option:hover {
+            background: #333;
+            color: #fff;
+        }
+        @media (prefers-color-scheme: dark) {
+            .lang-current { color: #86868b; }
+            .lang-current:hover { color: #fff; }
+            .lang-menu { background: #2d2d2f; box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
+            .lang-option { color: #86868b; }
+            .lang-option:hover { background: #3d3d3f; color: #fff; }
+        }
+    </style>
+</head>
+<body data-page="s">
+<div class="site-header">
+    <div class="site-header-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16"
+             x="0" y="0" viewBox="0 0 22.773 22.773" style="enable-background:new 0 0 512 512" xml:space="preserve" class="">
+            <g>
+                <path d="M15.769 0h.162c.13 1.606-.483 2.806-1.228 3.675-.731.863-1.732 1.7-3.351 1.573-.108-1.583.506-2.694 1.25-3.561C13.292.879 14.557.16 15.769 0zM20.67 16.716v.045c-.455 1.378-1.104 2.559-1.896 3.655-.723.995-1.609 2.334-3.191 2.334-1.367 0-2.275-.879-3.676-.903-1.482-.024-2.297.735-3.652.926h-.462c-.995-.144-1.798-.932-2.383-1.642-1.725-2.098-3.058-4.808-3.306-8.276v-1.019c.105-2.482 1.311-4.5 2.914-5.478.846-.52 2.009-.963 3.304-.765.555.086 1.122.276 1.619.464.471.181 1.06.502 1.618.485.378-.011.754-.208 1.135-.347 1.116-.403 2.21-.865 3.652-.648 1.733.262 2.963 1.032 3.723 2.22-1.466.933-2.625 2.339-2.427 4.74.176 2.181 1.444 3.457 3.028 4.209z"
+                      fill="#000000" opacity="1" data-original="#000000" class=""></path>
+            </g>
+        </svg>
+    </div>
+    <a href="#" class="site-header-link">Store</a>
+    <a href="#" class="site-header-link">Mac</a>
+    <a href="#" class="site-header-link">iPad</a>
+    <a href="#" class="site-header-link">iPhone</a>
+    <a href="#" class="site-header-link">Watch</a>
+    <a href="#" class="site-header-link">Vision</a>
+    <a href="#" class="site-header-link">AirPods</a>
+    <a href="#" class="site-header-link">TV & Home</a>
+    <a href="#" class="site-header-link">Entretenimiento</a>
+    <a href="#" class="site-header-link">Accesorios</a>
+    <a href="#" class="site-header-link">Soporte</a>
+    <div class="language-dropdown">
+        <button class="lang-current" id="langBtn">Español ▼</button>
+        <div class="lang-menu" id="langMenu">
+            <a href="/" class="lang-option">English</a>
+            <a href="/de/" class="lang-option">Deutsch</a>
+            <a href="/fr/" class="lang-option">Français</a>
+            <a href="/es/" class="lang-option">Español</a>
+            <a href="/pt/" class="lang-option">Português</a>
+            <a href="/it/" class="lang-option">Italiano</a>
+        </div>
+    </div>
+    <div class="site-header-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15px" height="44px" viewBox="0 0 15 44">
+            <path d="M14.298,27.202l-3.87-3.87c0.701-0.929,1.122-2.081,1.122-3.332c0-3.06-2.489-5.55-5.55-5.55c-3.06,0-5.55,2.49-5.55,5.55 c0,3.061,2.49,5.55,5.55,5.55c1.251,0,2.403-0.421,3.332-1.122l3.87,3.87c0.151,0.151,0.35,0.228,0.548,0.228 s0.396-0.076,0.548-0.228C14.601,27.995,14.601,27.505,14.298,27.202z M1.55,20c0-2.454,1.997-4.45,4.45-4.45 c2.454,0,4.45,1.997,4.45,4.45S8.454,24.45,6,24.45C3.546,24.45,1.55,22.454,1.55,20z"></path>
+        </svg>
+    </div>
+    <div class="site-header-icon">
+        <svg height="44" viewBox="0 0 14 44" width="14" xmlns="http://www.w3.org/2000/svg">
+            <path d="m11.3535 16.0283h-1.0205a3.4229 3.4229 0 0 0 -3.333-2.9648 3.4229 3.4229 0 0 0 -3.333 2.9648h-1.02a2.1184 2.1184 0 0 0 -2.117 2.1162v7.7155a2.1186 2.1186 0 0 0 2.1162 2.1167h8.707a2.1186 2.1186 0 0 0 2.1168-2.1167v-7.7155a2.1184 2.1184 0 0 0 -2.1165-2.1162zm-4.3535-1.8652a2.3169 2.3169 0 0 1 2.2222 1.8652h-4.4444a2.3169 2.3169 0 0 1 2.2222-1.8652zm5.37 11.6969a1.0182 1.0182 0 0 1 -1.0166 1.0171h-8.7069a1.0182 1.0182 0 0 1 -1.0165-1.0171v-7.7155a1.0178 1.0178 0 0 1 1.0166-1.0166h8.707a1.0178 1.0178 0 0 1 1.0164 1.0166z"></path>
+        </svg>
+    </div>
+</div>
+
+<div class="page-content">
+    <div class="page-title">
+        MacBook Problema de suspensión: pantalla negra después de despertar — Solución simple
+    </div>
+    <p class="page-description">
+        Una de las quejas más comunes entre los usuarios de MacBook recientemente es un problema grave al despertar el dispositivo del modo de suspensión. Después de cerrar la tapa y volver a abrirla más tarde, la pantalla permanece completamente negra, aunque el teclado parece responder. Este problema comenzó a aparecer con macOS Sequoia y no se ha resuelto por completo ni siquiera en las actualizaciones más recientes. La solución a este problema resultó ser bastante simple — fue propuesta por los desarrolladores de Apple. Para solucionarlo, solo sigue las instrucciones a continuación.
+    </p>
+
+    <span class="section-heading">
+        Paso 1: Abrir Terminal
+    </span>
+
+    <span class="section-item">
+        <li>Abre la <b>Terminal</b> en tu Mac — puedes encontrarla a través de Spotlight (<b>⌘ + Espacio</b>) escribiendo "Terminal".</li>
+    </span>
+
+    <span class="section-heading">
+        Paso 2: Ejecutar el comando de solución
+    </span>
+
+    <span class="section-item">
+        <li>Pega el siguiente comando en la Terminal y presiona <b>Enter</b>.</li>
+    </span>
+    <span class="section-item">
+        <li>Ingresa tu contraseña de Mac si se te solicita, luego <b>reinicia tu Mac</b>.</li>
+    </span>
+
+    <div class="terminal">
+        <div class="terminal-header">
+            <div class="terminal-dot red"></div>
+            <div class="terminal-dot yellow"></div>
+            <div class="terminal-dot green"></div>
+            <span class="terminal-title">Terminal</span>
+            <div class="terminal-title-spacer"></div>
+        </div>
+
+        <div class="terminal-body">
+            <div class="terminal-content">
+                <div class="terminal-command-wrapper">
+                    <code id="commandToCopy" class="terminal-command terminal-font">sudo pmset -a standby 0 && sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder && sudo purge</code>
+                </div>
+                <a href="#" id="copyButton" class="copy-button" style="text-decoration:none;display:inline-block;text-align:center">Copiar</a>
+            </div>
+        </div>
+    </div>
+
+    <span class="section-label">
+        Lo que hace esta solución:
+    </span>
+    <span class="section-item">
+        <li>Desactiva el <b>modo de espera</b> — un estado de suspensión profunda en el que entra macOS después de una inactividad prolongada.</li>
+    </span>
+    <span class="section-item">
+        <li>Mantiene tu Mac en un estado de suspensión más ligero para que se despierte de manera más confiable sin activar la pantalla negra.</li>
+    </span>
+    <span class="section-item">
+        <li>No afecta tus archivos personales, documentos o configuraciones de aplicaciones.</li>
+    </span>
+
+    <span class="section-label">
+        Qué causa el problema
+    </span>
+    <p class="page-description">
+        El problema parece estar relacionado con la forma en que macOS maneja los estados de energía y las transiciones de suspensión. En algunos casos, el subsistema gráfico o los servicios en segundo plano no logran reinicializarse correctamente después del despertar, lo que resulta en una pantalla que no responde mientras el sistema aún está parcialmente activo. Miles de usuarios en los foros de Apple han reportado el mismo comportamiento desde macOS Sequoia.
+    </p>
+
+    <span class="section-label">
+        Modelos de Mac afectados
+    </span>
+    <span class="section-item">
+        <li><b>MacBook Pro</b> — todos los modelos que ejecutan macOS Sequoia o posterior.</li>
+    </span>
+    <span class="section-item">
+        <li><b>MacBook Air</b> — chips M1, M2 y M3 confirmados como afectados.</li>
+    </span>
+    <span class="section-item">
+        <li><b>Mac mini</b> — los usuarios reportan el mismo comportamiento de pantalla negra después de la suspensión.</li>
+    </span>
+    <span class="section-item">
+        <li><b>iMac</b> — los usuarios de pantallas externas también pueden experimentar fallas en la reinicialización de la pantalla.</li>
+    </span>
+    <span class="section-item">
+        <li><b>Mac Studio / Mac Pro</b> — menos común, pero se aplica la misma solución.</li>
+    </span>
+
+    <span class="section-label">
+        ¿Es seguro?
+    </span>
+    <p class="page-description">
+        Sí. El comando solo cambia una configuración de administración de energía — no elimina archivos ni modifica datos del sistema. Desactivar el modo de espera simplemente evita que macOS entre en el estado de suspensión más profundo, manteniendo tu Mac en un modo inactivo más ligero. macOS continuará funcionando normalmente y puedes revertir el cambio en cualquier momento ejecutando el mismo comando con un valor de 1.
+    </p>
+
+    <span class="section-label">
+        ¿Afectará la duración de la batería?
+    </span>
+    <p class="page-description">
+        Puede haber un impacto menor en la batería cuando la tapa está cerrada por períodos prolongados, ya que el modo de espera está diseñado para reducir el consumo de energía durante largas sesiones de inactividad. Sin embargo, para la mayoría de los usuarios, la diferencia es insignificante — especialmente en comparación con la molestia de un reinicio forzado cada vez que el Mac se despierta. Si la duración de la batería es una preocupación, puedes reactivar el modo de espera con: sudo pmset -a standby 1.
+    </p>
+
+    <span class="section-label">
+        Consejos adicionales si el problema persiste
+    </span>
+    <span class="section-item">
+        <li>Reinicia el SMC (Controlador de Administración del Sistema) — esto puede resolver problemas de estado de energía en Mac con Intel.</li>
+    </span>
+    <span class="section-item">
+        <li>Revisa <b>Configuración del Sistema → Batería → Opciones</b> y desactiva <b>Power Nap</b> para reducir la actividad de despertar en segundo plano.</li>
+    </span>
+    <span class="section-item">
+        <li>Mantén macOS actualizado — Apple continúa lanzando parches que pueden incluir una solución permanente.</li>
+    </span>
+    <span class="section-item">
+        <li>Si la pantalla negra persiste, intenta presionar <b>Ctrl + Shift + Expulsar</b> (o Power) para poner solo la pantalla en suspensión y despertarla por separado.</li>
+    </span>
+    <span class="section-item">
+        <li>Informa el problema a Apple a través de <b>Feedback Assistant</b> para ayudar a acelerar una solución oficial.</li>
+    </span>
+
+    <span class="article-date">
+        Fecha de publicación: 23 de enero de 2026
+    </span>
+</div>
+
+<div class="section-divider"></div>
+
+<div class="feedback">
+    <div class="feedback-label">¿Te fue útil?</div>
+    <button class="feedback-button">Sí</button>
+    <button class="feedback-button">No</button>
+</div>
+
+<div class="site-footer">
+    <div class="footer-breadcrumb">
+        <span class="footer-logo">
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16"
+             x="0" y="0" viewBox="0 0 22.773 22.773" style="enable-background:new 0 0 512 512" xml:space="preserve" class="">
+            <g>
+                <path d="M15.769 0h.162c.13 1.606-.483 2.806-1.228 3.675-.731.863-1.732 1.7-3.351 1.573-.108-1.583.506-2.694 1.25-3.561C13.292.879 14.557.16 15.769 0zM20.67 16.716v.045c-.455 1.378-1.104 2.559-1.896 3.655-.723.995-1.609 2.334-3.191 2.334-1.367 0-2.275-.879-3.676-.903-1.482-.024-2.297.735-3.652.926h-.462c-.995-.144-1.798-.932-2.383-1.642-1.725-2.098-3.058-4.808-3.306-8.276v-1.019c.105-2.482 1.311-4.5 2.914-5.478.846-.52 2.009-.963 3.304-.765.555.086 1.122.276 1.619.464.471.181 1.06.502 1.618.485.378-.011.754-.208 1.135-.347 1.116-.403 2.21-.865 3.652-.648 1.733.262 2.963 1.032 3.723 2.22-1.466.933-2.625 2.339-2.427 4.74.176 2.181 1.444 3.457 3.028 4.209z"
+                      fill="#000000" opacity="1" data-original="#000000" class=""></path>
+            </g>
+        </svg>
+        </span>
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16"
+             x="0" y="0" viewBox="0 0 240.823 240.823" style="enable-background:new 0 0 512 512" xml:space="preserve" class="">
+            <g>
+                <path d="M183.189 111.816 74.892 3.555c-4.752-4.74-12.451-4.74-17.215 0-4.752 4.74-4.752 12.439 0 17.179l99.707 99.671-99.695 99.671c-4.752 4.74-4.752 12.439 0 17.191 4.752 4.74 12.463 4.74 17.215 0l108.297-108.261c4.68-4.691 4.68-12.511-.012-17.19z"
+                      fill="#d4d4d4" opacity="1" data-original="#000000" class=""></path>
+            </g>
+        </svg>
+        <span>Soporte</span>
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16"
+             x="0" y="0" viewBox="0 0 240.823 240.823" style="enable-background:new 0 0 512 512" xml:space="preserve" class="">
+            <g>
+                <path d="M183.189 111.816 74.892 3.555c-4.752-4.74-12.451-4.74-17.215 0-4.752 4.74-4.752 12.439 0 17.179l99.707 99.671-99.695 99.671c-4.752 4.74-4.752 12.439 0 17.191 4.752 4.74 12.463 4.74 17.215 0l108.297-108.261c4.68-4.691 4.68-12.511-.012-17.19z"
+                      fill="#d4d4d4" opacity="1" data-original="#000000" class=""></path>
+            </g>
+        </svg>
+        <span>MacBook Problema de suspensión: pantalla negra después de despertar</span>
+    </div>
+
+    <div class="footer-divider"></div>
+
+    <div class="footer-bottom">
+        <div class="footer-links">
+            <span class="footer-copy">Copyright © 2025 Apple Inc. Todos los derechos reservados.</span>
+            <a href="#">Política de privacidad</a>
+            <span class="footer-separator">|</span>
+            <a href="#">Términos de uso</a>
+            <span class="footer-separator">|</span>
+            <a href="#">Ventas y reembolsos</a>
+            <span class="footer-separator">|</span>
+            <a href="#">Aviso legal</a>
+        </div>
+        <div class="footer-locale">España</div>
+    </div>
+</div>
+
+<script>
+    
+    (function() {
+        const langBtn = document.getElementById('langBtn');
+        const langMenu = document.getElementById('langMenu');
+        
+        if (langBtn && langMenu) {
+            langBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                langMenu.classList.toggle('show');
+            });
+            
+            document.addEventListener('click', function() {
+                langMenu.classList.remove('show');
+            });
+            
+            langMenu.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        }
+    })();
+	</script> 
+<script src="/main/init.js"></script> 
+</body>
+</html>
